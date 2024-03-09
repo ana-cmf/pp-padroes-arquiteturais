@@ -11,7 +11,6 @@ public class EditalDeMonitoria {
 	private LocalDateTime dataInicio;
 	private LocalDateTime dataEmQueEncerrou;
 	private LocalDateTime dataFinal;
-	private String status;
 	private boolean clonado;
 	private boolean resultadoCalculado;
 	private float pesoNota;
@@ -46,7 +45,7 @@ public class EditalDeMonitoria {
 		this.dataFinal = dataFinal;
 	}
 	
-	public String getStatus() {
+	public String status() {
 		if(estaComInscricoesAbertas()) {
 			return "Inscrições abertas";
 		}else if (!jaComecou()){
