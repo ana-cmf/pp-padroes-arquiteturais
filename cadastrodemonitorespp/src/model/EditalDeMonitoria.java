@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import dto.EditalDeMonitoriaDTO;
+
 public class EditalDeMonitoria {
 
 	private long id;
@@ -162,6 +164,20 @@ public class EditalDeMonitoria {
 		editalClonado.setDataEmQueEncerrou(dataEmQueEncerrou);
 		
 		return editalClonado;
+	}
+	
+	public void editar(EditalDeMonitoriaDTO editalDTO) {
+		
+		if(!jaComecou()) {
+			// editar data inicio
+		}
+		
+		// editar data final
+		
+		// editar quantidade máxima de inscrições
+		
+		// editar pesos
+		
 	}
 	
 	public boolean encerrouAntesDoTempo() {
