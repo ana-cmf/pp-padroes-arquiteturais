@@ -13,11 +13,11 @@ import javax.swing.SwingConstants;
 
 import imagens.Imagens;
 
-public class ModeloBasicoJanela extends JFrame{
+public class ModeloBasicoJanela extends JFrame {
 
 	private JLabel tituloDoCabecalho;
 	private JPanel cabecalho;
-	
+	 
 	public ModeloBasicoJanela() {
 		// Chamar o método do controller para recupera a central
 		setIconImage(Imagens.ICONE_IF_TOPO_DA_JANELA);
@@ -71,6 +71,7 @@ public class ModeloBasicoJanela extends JFrame{
 		add(cabecalho);
 	
 	}
+	
 	public JLabel getTituloDoCabecalho() {
 		return tituloDoCabecalho;
 	}

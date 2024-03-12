@@ -18,23 +18,6 @@ public class EditalDeMonitoriaDTO {
 	private ArrayList<Vaga> vagas = new ArrayList<Vaga>();
 	private int maximoDeInscricoesPorAluno;
 	
-	public EditalDeMonitoriaDTO toDTO() {
-        EditalDeMonitoriaDTO dto = new EditalDeMonitoriaDTO();
-        dto.setId(this.id);
-        dto.setNumero(this.numero);
-        dto.setDataInicio(this.dataInicio);
-        dto.setDataEmQueEncerrou(this.dataEmQueEncerrou);
-        dto.setDataFinal(this.dataFinal);;
-        dto.setClonado(this.clonado);
-        dto.setResultadoCalculado(this.resultadoCalculado);
-        dto.setPesoNota(this.pesoNota);
-        dto.setPesoCRE(this.pesoCRE);
-        dto.setVagas(getVagas());
-        dto.setMaximoDeInscricoesPorAluno(this.maximoDeInscricoesPorAluno);
-
-        return dto;
-    }
-	
 	public long getId() {
 		return id;
 	}
