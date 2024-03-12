@@ -21,7 +21,7 @@ import ouvintes.OuvinteBotaoCadastrar;
 /**
  * Janela de login
  */
-public class JanelaLogin extends ModeloJanela {
+public class JanelaLogin extends ModeloBasicoJanela {
 	
 	private JPasswordField campoDeSenha;
 	private JTextField campoDeEmail;
@@ -43,11 +43,7 @@ public class JanelaLogin extends ModeloJanela {
 	
 
 	public JanelaLogin(){
-		
-		pegarResolucao();
-		configurarLayout();
-		criarCabecalho();
-		getTituloDoCabecalho().setText("Cadastro de monitores - Login");
+		criarCabecalho("Cadastro de monitores - Login");
 		configurarFormulario();
 		setVisible(true);
 		repaint();
