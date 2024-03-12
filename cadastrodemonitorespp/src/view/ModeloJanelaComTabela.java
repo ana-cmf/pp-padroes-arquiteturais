@@ -15,13 +15,13 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import controller.CoordenadorController;
+import controller.TransicaoDeJanelasCoordenadorController;
 import dto.UsuarioDTO;
 
 public class ModeloJanelaComTabela extends ModeloBasicoJanela implements ActionListener{
 
 	private UsuarioDTO usuarioDTO;
-	private CoordenadorController coordenadorController;
+	private TransicaoDeJanelasCoordenadorController coordenadorController;
 	
 	private JPanel painelBranco;
 	
