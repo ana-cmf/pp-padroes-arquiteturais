@@ -202,6 +202,7 @@ public class EditalDeMonitoria {
 	public LocalDateTime getDataEmQueEncerrou() {
 		return dataEmQueEncerrou;
 	}
+	
 	public void setDataEmQueEncerrou(LocalDateTime dataEmQueEncerrou) {
 		this.dataEmQueEncerrou = dataEmQueEncerrou;
 	}
@@ -223,4 +224,22 @@ public class EditalDeMonitoria {
 	public void setMaximoDeInscricoesPorAluno(int maximoDeInscricoesPorAluno) {
 		this.maximoDeInscricoesPorAluno = maximoDeInscricoesPorAluno;
 	}
+	
+	public static EditalDeMonitoria fromDTO(EditalDeMonitoriaDTO dto) {
+		EditalDeMonitoria edital = new EditalDeMonitoria();
+		edital.setId(dto.getId());
+		edital.setNumero(dto.getNumero());
+		edital.setDataInicio(dto.getDataInicio());
+		edital.setDataEmQueEncerrou(dto.getDataEmQueEncerrou());
+		edital.setDataFinal(dto.getDataFinal());
+		edital.setClonado(dto.isClonado());
+		edital.setResultadoCalculado(dto.isResultadoCalculado());
+		edital.setPesoNota(dto.getPesoNota());
+		edital.setPesoCRE(dto.getPesoCRE());
+		edital.setVagas(dto.getVagas());
+		edital.setMaximoDeInscricoesPorAluno(dto.getMaximoDeInscricoesPorAluno());
+		
+		return edital;
+	}
+	
 }
