@@ -182,17 +182,7 @@ public class TelaCadastroCoordenador extends ModeloBasicoJanela {
 	/**
 	 * Habilita o botão de confirmação da tela se todos os campos estiverem preenchidos
 	 */
-	public void habilitarBotaoConfirmar() {
-		if (nome.getText().isBlank() || sobrenome.getText().isBlank() ||
-			email.getText().isBlank() || confirmarEmail.getText().isBlank() ||
-			(senha.getPassword().length < 8) || (confirmarSenha.getPassword().length < 8)) {
-		
-			botaoConfirmar.setEnabled(false);
-			
-		}else {
-			botaoConfirmar.setEnabled(true);
-		}
-	}
+
 	
 	public void cadastrarCoordenador() throws Exception {
 		

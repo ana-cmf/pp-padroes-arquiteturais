@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 import dto.EditalDeMonitoriaDTO;
 
 public class EditalDeMonitoria {
@@ -168,12 +169,16 @@ public class EditalDeMonitoria {
 	public void editar(EditalDeMonitoriaDTO editalDTO) {
 		
 		if(!jaComecou()) {
-			// editar data inicio
+			dataInicio = editalDTO.getDataInicio();
 		}
 		
-		// editar data final
+		if(editalDTO.getDataFinal().isBefore(dataFinal)) {
+			dataFinal = editalDTO.getDataFinal();
+		}
 		
-		// editar quantidade máxima de inscrições
+		if(editalDTO.getMaximoDeInscricoesPorAluno() > maximoDeInscricoesPorAluno) {
+			maximoDeInscricoesPorAluno = editalDTO.getMaximoDeInscricoesPorAluno();
+		}
 		
 		// editar pesos
 		
@@ -224,23 +229,6 @@ public class EditalDeMonitoria {
 		this.maximoDeInscricoesPorAluno = maximoDeInscricoesPorAluno;
 	}
 	
-	public EditalDeMonitoriaDTO toDTO() {
-        EditalDeMonitoriaDTO dto = new EditalDeMonitoriaDTO();
-        dto.setId(this.id);
-        dto.setNumero(this.numero);
-        dto.setDataInicio(this.dataInicio);
-        dto.setDataEmQueEncerrou(this.dataEmQueEncerrou);
-        dto.setDataFinal(this.dataFinal);;
-        dto.setClonado(this.clonado);
-        dto.setResultadoCalculado(this.resultadoCalculado);
-        dto.setPesoNota(this.pesoNota);
-        dto.setPesoCRE(this.pesoCRE);
-        dto.setVagas(getVagas());
-        dto.setMaximoDeInscricoesPorAluno(this.maximoDeInscricoesPorAluno);
-
-        return dto;
-    }
-	
 	public static EditalDeMonitoria fromDTO(EditalDeMonitoriaDTO dto) {
 		EditalDeMonitoria edital = new EditalDeMonitoria();
 		edital.setId(dto.getId());
@@ -256,5 +244,6 @@ public class EditalDeMonitoria {
 		edital.setMaximoDeInscricoesPorAluno(dto.getMaximoDeInscricoesPorAluno());
 		
 		return edital;
-	}	
+	}
+	
 }
