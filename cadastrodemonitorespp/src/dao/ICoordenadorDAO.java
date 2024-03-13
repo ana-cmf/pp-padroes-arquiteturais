@@ -2,7 +2,7 @@ package dao;
 
 import dto.CoordenadorDTO;
 
-public interface IPersistenciaCoordenador {
+public interface ICoordenadorDAO {
 
 	public void cadastrarCoordenador(CoordenadorDTO coordenadorDTO) throws Exception;
 	

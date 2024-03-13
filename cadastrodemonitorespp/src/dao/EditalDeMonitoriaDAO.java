@@ -1,5 +1,6 @@
 package dao;
 
-public class EditalDeMonitoriaDAO {
+public class EditalDeMonitoriaDAO implements IEditalDeMonitoriaDAO {
 
+	
 }

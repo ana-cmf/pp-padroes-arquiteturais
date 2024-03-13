@@ -1,5 +1,6 @@
 package dao;
 
-public class VagaDAO {
+public class VagaDAO implements IVagaDAO {
+	
 
 }

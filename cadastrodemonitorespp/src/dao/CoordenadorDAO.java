@@ -6,7 +6,7 @@ import dto.CoordenadorDTO;
 
 import model.Coordenador;
 
-public class CoordenadorDAO implements IPersistenciaCoordenador{
+public class CoordenadorDAO implements ICoordenadorDAO{
 	
 	@Override
 	public void cadastrarCoordenador(CoordenadorDTO coordenadorDTO)  throws Exception {
