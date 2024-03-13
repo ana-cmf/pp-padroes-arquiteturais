@@ -1,21 +1,24 @@
 package dao;
 
 import dto.CentralDeInformacoesDTO;
+
 import dto.CoordenadorDTO;
+
+import model.Coordenador;
 
 public class CoordenadorDAO implements IPersistenciaCoordenador{
 	
 	@Override
 	public void cadastrarCoordenador(CoordenadorDTO coordenadorDTO)  throws Exception {
 		
-		CoordenadorDTO coord = new CoordenadorDTO();
-		coord.setNome(getNome().getText());
-		coord.setSobrenome(getSobrenome().getText());
-		coord.setEmail(getEmail().getText());
-		coord.setSenha(getSennha().getText());
+		Coordenador coord = Coordenador.getInstancia();
+		coord.setNome(coordenadorDTO.getNome());
+		coord.setSobrenome(coordenadorDTO.getSobrenome());
+		coord.setEmail(coordenadorDTO.getEmail());
+		coord.setSenha(coordenadorDTO.getSenha());
 		
 		PersistenciaDAO persistencia = new PersistenciaDAO();
-		CentralDeInformacoes central = null;
+		CentralDeInformacoesDTO central = null;
 		
 	}
 

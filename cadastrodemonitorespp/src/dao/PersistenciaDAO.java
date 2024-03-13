@@ -14,5 +14,5 @@ public class PersistenciaDAO {
    public PersistenciaDAO() {
 	   xStream = new XStream(new DomDriver("UTF-8"));
 	   xStream.addPermission(AnyTypePermission.ANY); 
-   }
+   } 
 }
