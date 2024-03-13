@@ -76,17 +76,7 @@ public class EditalDeMonitoria {
 		return LocalDateTime.now().isAfter(dataInicio);
 	}
 	
-	public boolean inscrever(Aluno aluno, String disciplina) {
-		if (!jaAcabou() && jaComecou()) {
-			for (Vaga vaga: vagas) {
-				if (vaga.getDisciplina().equalsIgnoreCase(disciplina)) {
-					vaga.getListaDeAlunosInscritos().add(aluno);
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+	
 	
 	
 	public void encerrarEditalAntesDoTempo() {
@@ -110,14 +100,6 @@ public class EditalDeMonitoria {
 	
 	public EditalDeMonitoria() {
 		this.id = System.currentTimeMillis();
-	}
-	
-	
-	public void gerarResultado() {
-		for (Vaga vaga: vagas) {
-			vaga.gerarRankingDaVaga();
-		}
-		resultadoCalculado = true;
 	}
 	
 	public String toString() {
