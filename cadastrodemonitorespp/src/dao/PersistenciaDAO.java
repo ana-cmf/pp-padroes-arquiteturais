@@ -10,9 +10,6 @@ import com.thoughtworks.xstream.security.AnyTypePermission;
 
 import BD.CentralDeInformacoes;
 
-/**
- * Classe que salva e recupera as informacoes da central
- */
 public class PersistenciaDAO {
 	
    private XStream xStream; 
@@ -39,3 +36,4 @@ public class PersistenciaDAO {
        return new CentralDeInformacoes();
    }
 }
+
