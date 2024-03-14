@@ -15,11 +15,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import controller.EditalDeMonitoriaController;
 import dto.EditalDeMonitoriaDTO;
 
-public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionListener{
+public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionListener, ListSelectionListener{
 	
 	private EditalDeMonitoriaDTO editalSelecionado;
 	private JMenuItem editarEdital;
@@ -179,6 +181,20 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 		
 		getPainelBranco().add(areaDosBotoes);
 	}
+	
+	public void adicionarOuvinteNaTabela() {
+		
+		if(getTabela()!= null) {
+			getTabela().getSelectionModel().addListSelectionListener(this);
+		}
+	}
+	
+	public void valueChanged(ListSelectionEvent e) {
+		int index = getTabela().getSelectedRow();
+		setEditalSelecionado(getListaDeEditais().get(index));
+		atualizarJanela();
+				
+	}
 
 	public void atualizarJanela() {
 		new JanelaVerEditais(editalSelecionado, getListaDeEditais());
@@ -232,6 +248,7 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 	public void setEncerrarEdital(JButton encerrarEdital) {
 		this.encerrarEdital = encerrarEdital;
 	}
+
 	
 
 }

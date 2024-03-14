@@ -103,43 +103,6 @@ public class EditalDeMonitoria {
 		}
 	}
 	
-	public String toString() {
-		
-		String numero = "Número: " + this.numero;
-		
-		DateTimeFormatter formatoDaData = DateTimeFormatter.ofPattern("d/M/y");
-		
-		String dataInicial = "Data de início: " + this.dataInicio.toLocalDate().format(formatoDaData);
-		
-		String dataFinal = "Data final: ";
-		
-		if(encerrouAntesDoTempo()) {
-			dataFinal = dataFinal + this.dataEmQueEncerrou.toLocalDate().format(formatoDaData);
-		} else {
-			dataFinal = dataFinal + this.dataFinal.toLocalDate().format(formatoDaData);
-		}
-		
-		String pesoNota = "Peso da nota na disciplina: " + this.pesoNota;
-		String pesoCRE = "Peso do CRE: " + this.pesoCRE;
-		String maximoDeInscricoesPorAluno = "Máximo de inscrições por aluno: " + this.maximoDeInscricoesPorAluno;
-
-		
-		String infoVagas = "";
-		for (Vaga vaga: vagas) {
-			infoVagas += vaga.getDisciplina()+" - "+vaga.getQuantidadeDeVagas()+" vagas\n";
-		}
-		
-		
-		String infoEdital = numero + "\n" +
-							dataInicial + "\n" +
-							dataFinal + "\n" +
-							pesoNota + "\n" +
-							pesoCRE + "\n" +
-							maximoDeInscricoesPorAluno + "\n" +
-							infoVagas;
-		return infoEdital;
-	}
-	
 	public EditalDeMonitoria clone() {
 		EditalDeMonitoria editalClonado = new EditalDeMonitoria(numero, dataInicio, dataFinal);
 		editalClonado.setVagas(vagas);
@@ -232,9 +195,6 @@ public class EditalDeMonitoria {
 		
 		return edital;
 	}
-<<<<<<< HEAD
-}
-=======
 	
 	public EditalDeMonitoriaDTO toDTO() {
         EditalDeMonitoriaDTO dto = new EditalDeMonitoriaDTO();
@@ -252,5 +212,4 @@ public class EditalDeMonitoria {
         
         return dto;
     }	
-}
->>>>>>> 4998ccef03d036365899f0895951ceab38000971
+

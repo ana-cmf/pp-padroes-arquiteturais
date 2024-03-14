@@ -1,84 +1,165 @@
 package view;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
-import dto.EditalDTO;;
+import dto.EditalDeMonitoriaDTO;
+import dto.VagaDTO;
 
-/**
- * Janela com um formulário de cadastro de um novo edital
- */
-public class JanelaCadastrarEdital extends ModeloJanelaComTabela {
+public class JanelaCadastrarEdital extends ModeloBasicoJanela implements FocusListener, ActionListener{
 
-    private JFormattedTextField textoFormatadoDataInicio;
-    private JFormattedTextField textoFormatadoDataLimite;
-    private JTextField campoDisciplinas;
-    private JTextField campoVagas;
-    private JTextField textFieldRanqueamento;
-    private JTextField textFieldRanqueamento2;
+    
 	private JButton confirmar;
-	private boolean informacoesSaoValidas;
+	private JFormattedTextField campoDataInicial;
+	private JFormattedTextField campoDataFinal;
+	private JComboBox campoMaximoDeInscricoes;
+	private JComboBox<Float> campoPesoCRE;
+	private JComboBox<Float> campoPesoNota;
+	private EditalDeMonitoriaDTO editalDTO;
+	private VagaDTO vagaDTO;
+	private JButton adicionarDisciplina;
+	private Object controller;
+	
 
 
     public JanelaCadastrarEdital() {
     	criarCabecalho("Cadastro de monitores");
-    	adicionarPainelBrancoNaTela();	
+    	criarFormulario();
+    	setVisible(true);
     }
 
-
-    class OuvinteBotaoAdicionarEdital implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String dataInicial = textoFormatadoDataInicio.getText();
-            String dataLimite = textoFormatadoDataLimite.getText();
-            String disciplinas = campoDisciplinas.getText();
-            String vagasDisponiveis = campoVagas.getText();
-            String pesos1 = textFieldRanqueamento.getText();
-            String pesos2 = textFieldRanqueamento2.getText();
-
-            DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-            LocalDateTime dataInicio = LocalDate.parse(dataInicial, formatar).atStartOfDay();
-            LocalDateTime dataFinal = LocalDate.parse(dataLimite, formatar).atStartOfDay();
-            int vagas = Integer.parseInt(vagasDisponiveis);
-            float pesoCRE = Float.parseFloat(pesos1);
-            float pesoDisciplina = Float.parseFloat(pesos2);
-
-            // Verificações de validade das datas e dos pesos
-            // Aqui, adicione sua lógica para validação
-
-            // Usando o DTO
-            EditalDTO editalDTO = new EditalDTO(dataInicio, dataFinal, disciplinas, vagas, pesoCRE, pesoDisciplina);
-            
-            // Simulação de um método que irá processar o DTO
-            // Note: Você precisará implementar esse método na sua lógica de negócio
-            processarEditalDTO(editalDTO);
-        }
-
-        private void processarEditalDTO(EditalDTO editalDTO) {
-            // Aqui você iria adicionar a lógica para processar o DTO,
-            // como salvar as informações no banco de dados ou enviar para um servidor.
-            // Por exemplo: persistencia.salvarEdital(editalDTO);
-        }
+    public void criarFormulario() {
+		
+		JPanel areaDoFormulario = new JPanel();
+		areaDoFormulario.setLayout(null);
+		areaDoFormulario.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+		areaDoFormulario.setBounds(getWidth()/6, 90, 390, 800);
+		areaDoFormulario.setOpaque(true);
+		add(areaDoFormulario);
+		
+		JLabel titulo = new JLabel("Cadastrar Edital");
+		titulo.setBounds(20, 15, 300, 30);
+		titulo.setFont(new Font("Arial", Font.BOLD, 20));
+		areaDoFormulario.add(titulo);
+		
+		try {
+			MaskFormatter mascara = new MaskFormatter("##/##/####");
+			campoDataInicial = new JFormattedTextField(mascara);
+			campoDataFinal = new JFormattedTextField(mascara);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Formato de data inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+		
+		JLabel labelDataInicial = labelPadrao("Data de início:", 12);
+		labelDataInicial.setBounds(20, 90, 100, 15);
+		areaDoFormulario.add(labelDataInicial);
+		
+		campoDataInicial.setBounds(20, 105, 350, 20);
+		areaDoFormulario.add(campoDataInicial);
+		
+		JLabel labelDataFinal = labelPadrao("Data final:", 12);
+		labelDataFinal.setBounds(20, 145, 100, 15);
+		areaDoFormulario.add(labelDataFinal);
+	
+		campoDataFinal.setBounds(20, 160, 350, 20);
+		areaDoFormulario.add(campoDataFinal);
+		
+		JLabel labelMaximoDeInscricoes = labelPadrao("Quantidade máxima de inscrições por aluno:", 12);
+		labelMaximoDeInscricoes.setBounds(20, 200, 60, 15);
+		areaDoFormulario.add(labelMaximoDeInscricoes);
+		
+		Integer[] numeros = {1,2,3,4,5,6,7,8,9,10};
+		campoMaximoDeInscricoes = new JComboBox<Integer>(numeros);
+		campoMaximoDeInscricoes.setBounds(20, 215, 350, 20);
+		areaDoFormulario.add(campoMaximoDeInscricoes);
+		
+		JLabel labelPesoCRE = labelPadrao("Peso do CRE:", 12);
+		labelPesoCRE.setBounds(20, 255, 100, 15);
+		areaDoFormulario.add(labelPesoCRE);
+		
+		Float[] numerosDecimais = {0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f};
+		campoPesoCRE = new JComboBox<Float>(numerosDecimais);
+		campoPesoCRE.setBounds(20, 270, 350, 20);
+		areaDoFormulario.add(campoPesoCRE);
+		
+		JLabel labelPesoNota = labelPadrao("Peso da nota na disciplina:", 12);
+		labelPesoNota.setBounds(20, 310, 250, 15);
+		areaDoFormulario.add(labelPesoNota);
+		
+		campoPesoNota = new JComboBox<Float>(numerosDecimais);
+		campoPesoNota.setBounds(20, 325, 350, 20);
+		areaDoFormulario.add(campoPesoNota);
+		
+		campoDataInicial.addFocusListener(this);
+		campoDataFinal.addFocusListener(this);
+		campoMaximoDeInscricoes.addFocusListener(this);
+        campoPesoCRE.addFocusListener(this);
+        campoPesoNota.addFocusListener(this);
+        
+        confirmar = new JButton("Confirmar");
+        confirmar.setBounds(20, 600, 100, 50);
+        confirmar.setEnabled(false);
+        confirmar.addActionListener(this);
+        
+        adicionarDisciplina = new JButton("Adicionar disciplina");
+        adicionarDisciplina.setBounds(20, 370, 150, 30);
+        
+        areaDoFormulario.add(confirmar);
+        areaDoFormulario.add(adicionarDisciplina);
+        
+	}
+    
+    public boolean tudoEstaPreenchido() {
+    	return !campoDataFinal.getText().isBlank() &&
+    	   !campoDataInicial.getText().isBlank() &&
+    	   campoPesoCRE.getSelectedItem() != null &&
+    	   campoPesoNota.getSelectedItem() != null &&
+    	   campoMaximoDeInscricoes.getSelectedItem() != null;
+    		
+    }
+    
+    public void habilitarBotaoConfirmar() {
+    	if(tudoEstaPreenchido()) {
+    		confirmar.setEnabled(true);
+    	}
     }
     
     public static void main(String[] args) {
     	JanelaCadastrarEdital j = new JanelaCadastrarEdital();
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		habilitarBotaoConfirmar();
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == confirmar) {
+			controller.
+		}
+		
 	}
 
 }
