@@ -1,7 +1,6 @@
 package dao;
 
-import dto.CentralDeInformacoesDTO;
-
+import BD.CentralDeInformacoesDTO;
 import dto.CoordenadorDTO;
 
 import model.Coordenador;
