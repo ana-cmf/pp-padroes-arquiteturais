@@ -11,6 +11,7 @@ import model.EditalDeMonitoria;
 
 public class EditalDeMonitoriaDAO implements IEditalDeMonitoriaDAO {
 
+
 	public void salvarEdital(EditalDeMonitoriaDTO edital) {
 		EditalDeMonitoria novoEdital = new EditalDeMonitoria();
 		novoEdital = novoEdital.fromDTO(edital);
@@ -32,6 +33,7 @@ public class EditalDeMonitoriaDAO implements IEditalDeMonitoriaDAO {
 		CentralDeInformacoes central = persistencia.recuperarCentral("central.xml");
 		for (EditalDeMonitoriaDTO edital: central.getTodosOsEditais()) {
 			if (edital.getId() == id.getId() ) {
+<<<<<<< HEAD
 				//edital.editar(id);
 				
 			}
@@ -44,5 +46,12 @@ public class EditalDeMonitoriaDAO implements IEditalDeMonitoriaDAO {
 		PersistenciaDAO persistencia = new PersistenciaDAO();
 		CentralDeInformacoes central = persistencia.recuperarCentral("central.xml");
 		return central.getTodosOsEditais();
+=======
+				edital = id;
+				
+			}
+		persistencia.salvarCentral(central, "central. xml");
+			}		
+>>>>>>> 6be7e16abdffe353b1ad8787b1d66ce6101f5484
 	}
-}
+}  
