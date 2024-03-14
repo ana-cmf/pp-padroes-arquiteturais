@@ -66,7 +66,7 @@ public class EditalDeMonitoria {
 		}
 		this.dataFinal = dataFinal;
 	}
-	public ArrayList<Vaga> getVagas() {
+	public ArrayList<VagaDTO> getVagas() {
 		return vagas;
 	}
 	
@@ -125,7 +125,7 @@ public class EditalDeMonitoria {
 
 		
 		String infoVagas = "";
-		for (Vaga vaga: vagas) {
+		for (VagaDTO vaga: vagas) {
 			infoVagas += vaga.getDisciplina()+" - "+vaga.getQuantidadeDeVagas()+" vagas\n";
 		}
 		
@@ -230,11 +230,7 @@ public class EditalDeMonitoria {
 		edital.setVagas(dto.getVagas());
 		edital.setMaximoDeInscricoesPorAluno(dto.getMaximoDeInscricoesPorAluno());
 		
-		return edital;
-	}
-<<<<<<< HEAD
-}
-=======
+		return edital;}
 	
 	public EditalDeMonitoriaDTO toDTO() {
         EditalDeMonitoriaDTO dto = new EditalDeMonitoriaDTO();
@@ -251,6 +247,6 @@ public class EditalDeMonitoria {
 		dto.setMaximoDeInscricoesPorAluno(this.maximoDeInscricoesPorAluno);
         
         return dto;
+		
     }	
 }
->>>>>>> 4998ccef03d036365899f0895951ceab38000971

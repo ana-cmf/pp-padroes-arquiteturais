@@ -1,6 +1,8 @@
 package dao;
 
 
+import java.util.ArrayList;
+
 import BD.CentralDeInformacoes;
 import dto.EditalDeMonitoriaDTO;
 import dto.VagaDTO;  
@@ -8,6 +10,7 @@ import model.EditalDeMonitoria;
 
 
 public class EditalDeMonitoriaDAO implements IEditalDeMonitoriaDAO {
+
 
 	public void salvarEdital(EditalDeMonitoriaDTO edital) {
 		EditalDeMonitoria novoEdital = new EditalDeMonitoria();
@@ -17,7 +20,7 @@ public class EditalDeMonitoriaDAO implements IEditalDeMonitoriaDAO {
 	public void excluirEdital(EditalDeMonitoriaDTO editaldto) throws Exception {
 		PersistenciaDAO persistencia = new PersistenciaDAO();
 		CentralDeInformacoes central = persistencia.recuperarCentral("central.xml");
-		for (EditalDeMonitoria edital: central.getTodosOsEditais()) {
+		for (EditalDeMonitoriaDTO edital: central.getTodosOsEditais()) {
 			if (edital.getId() == editaldto.getId() ) {
 				central.getTodosOsEditais().remove(edital);
 		}
@@ -28,12 +31,12 @@ public class EditalDeMonitoriaDAO implements IEditalDeMonitoriaDAO {
 	public void editarEdital(EditalDeMonitoriaDTO id) throws Exception {
 		PersistenciaDAO persistencia = new PersistenciaDAO();
 		CentralDeInformacoes central = persistencia.recuperarCentral("central.xml");
-		for (EditalDeMonitoria edital: central.getTodosOsEditais()) {
+		for (EditalDeMonitoriaDTO edital: central.getTodosOsEditais()) {
 			if (edital.getId() == id.getId() ) {
-				edital.editar(id);
+				edital = id;
 				
 			}
-		persistencia.salvarCentral(central, "central - xml");
+		persistencia.salvarCentral(central, "central. xml");
 			}		
 	}
-}
+}  
