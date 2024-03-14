@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 import dto.EditalDeMonitoriaDTO;
 
 public interface IEditalDeMonitoriaDAO {
+		
+	public void salvarEdital(EditalDeMonitoriaDTO edital);
 	
-	public void reabrirEdital();	
+	public void excluirEdital(EditalDeMonitoriaDTO id);
 	
-	public EditalDeMonitoriaDTO clone();
-	
-	public void criarNovoEdital(LocalDateTime dataInicio, LocalDateTime dataFinal, String disciplina, int quantidadeDeVagas, float pesoCRE, float pesoNotaAluno);
+	public void editarEdital(EditalDeMonitoriaDTO id);
 	
 
 }
