@@ -103,6 +103,7 @@ public class EditalDeMonitoria {
 		}
 	}
 	
+<<<<<<< HEAD
 	public String toString() {
 		
 		String numero = "Número: " + this.numero;
@@ -140,6 +141,8 @@ public class EditalDeMonitoria {
 		return infoEdital;
 	}
 	
+=======
+>>>>>>> 14c167facf628628e234ffe9fc43ed89a43acdbd
 	public EditalDeMonitoria clone() {
 		EditalDeMonitoria editalClonado = new EditalDeMonitoria(numero, dataInicio, dataFinal);
 		editalClonado.setVagas(vagas);
@@ -230,7 +233,12 @@ public class EditalDeMonitoria {
 		edital.setVagas(dto.getVagas());
 		edital.setMaximoDeInscricoesPorAluno(dto.getMaximoDeInscricoesPorAluno());
 		
+<<<<<<< HEAD
 		return edital;}
+=======
+		return edital;
+	}
+>>>>>>> 14c167facf628628e234ffe9fc43ed89a43acdbd
 	
 	public EditalDeMonitoriaDTO toDTO() {
         EditalDeMonitoriaDTO dto = new EditalDeMonitoriaDTO();
@@ -249,4 +257,8 @@ public class EditalDeMonitoria {
         return dto;
 		
     }	
+<<<<<<< HEAD
 }
+=======
+
+>>>>>>> 14c167facf628628e234ffe9fc43ed89a43acdbd
