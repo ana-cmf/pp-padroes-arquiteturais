@@ -1,6 +1,6 @@
 package dto;
 
-public class AlunoDTO extends UsuarioDTO {
+public class AlunoDTO  {
 
 	private String matricula;
 	private float CRE;

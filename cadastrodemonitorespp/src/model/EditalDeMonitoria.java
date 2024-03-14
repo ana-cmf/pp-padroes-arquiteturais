@@ -20,6 +20,18 @@ public class EditalDeMonitoria {
 	private ArrayList<Vaga> vagas = new ArrayList<Vaga>();
 	private int maximoDeInscricoesPorAluno;
 	
+	public EditalDeMonitoria(String numero, LocalDateTime dataInicio, LocalDateTime dataFinal) {
+		this.id = System.currentTimeMillis();
+		this.numero = numero;
+		this.dataInicio = dataInicio;
+		this.dataFinal = dataFinal;
+	}
+	
+	
+	public EditalDeMonitoria() {
+		this.id = System.currentTimeMillis();
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -37,16 +49,29 @@ public class EditalDeMonitoria {
 		return dataInicio;
 	}
 	public void setDataInicio(LocalDateTime dataInicio) {
+		if (LocalDateTime.now().isAfter(dataInicio)) {
+			System.out.println("Data Inválida");
+		}
 		this.dataInicio = dataInicio;
+
 	}
 	
 	public LocalDateTime getDataFinal() {
 		return dataFinal;
 	}
 	public void setDataFinal(LocalDateTime dataFinal) {
+		if (LocalDateTime.now().isAfter(dataFinal)) {
+			System.out.println("Data Inválida");
+		}
 		this.dataFinal = dataFinal;
 	}
+	public ArrayList<Vaga> getVagas() {
+		return vagas;
+	}
 	
+	public void setVagas(ArrayList<Vaga> vagas) {
+		this.vagas = vagas;
+	}
 	public String status() {
 		if(estaComInscricoesAbertas()) {
 			return "Inscrições abertas";
@@ -59,15 +84,6 @@ public class EditalDeMonitoria {
 	public boolean estaComInscricoesAbertas() {
 		return (!jaAcabou() && !encerrouAntesDoTempo() && jaComecou()); 
 	}
-	
-	public ArrayList<Vaga> getVagas() {
-		return vagas;
-	}
-	
-	public void setVagas(ArrayList<Vaga> vagas) {
-		this.vagas = vagas;
-	}
-	
 	public boolean jaAcabou() {
 		return LocalDateTime.now().isAfter(dataFinal);
 	}
@@ -75,9 +91,6 @@ public class EditalDeMonitoria {
 	public boolean jaComecou() {
 		return LocalDateTime.now().isAfter(dataInicio);
 	}
-	
-	
-	
 	
 	public void encerrarEditalAntesDoTempo() {
 		dataEmQueEncerrou = LocalDateTime.now();
@@ -87,19 +100,6 @@ public class EditalDeMonitoria {
 		if (encerrouAntesDoTempo()) {
 			dataEmQueEncerrou = null;
 		}
-	}
-	
-	
-	public EditalDeMonitoria(String numero, LocalDateTime dataInicio, LocalDateTime dataFinal) {
-		this.id = System.currentTimeMillis();
-		this.numero = numero;
-		this.dataInicio = dataInicio;
-		this.dataFinal = dataFinal;
-	}
-	
-	
-	public EditalDeMonitoria() {
-		this.id = System.currentTimeMillis();
 	}
 	
 	public String toString() {
@@ -196,12 +196,16 @@ public class EditalDeMonitoria {
 		return pesoNota;
 	}
 	public void setPesoNota(float pesoNota) {
+		System.out.println("A soma do peso do CRE tem que ser igual a 1");
 		this.pesoNota = pesoNota;
 	}
 	public float getPesoCRE() {
 		return pesoCRE;
 	}
 	public void setPesoCRE(float pesoCRE) {
+		if (pesoCRE != 1) {
+			System.out.println("A soma do peso do CRE tem que ser igual a 1");
+		}
 		this.pesoCRE = pesoCRE;
 	}
 	public int getMaximoDeInscricoesPorAluno() {
@@ -227,5 +231,4 @@ public class EditalDeMonitoria {
 		
 		return edital;
 	}
-	
 }
