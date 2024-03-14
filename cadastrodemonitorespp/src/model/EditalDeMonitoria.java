@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import dto.EditalDeMonitoriaDTO;
+import dto.VagaDTO;
 
 public class EditalDeMonitoria {
 
@@ -17,7 +18,7 @@ public class EditalDeMonitoria {
 	private boolean resultadoCalculado;
 	private float pesoNota;
 	private float pesoCRE;
-	private ArrayList<Vaga> vagas = new ArrayList<Vaga>();
+	private ArrayList<VagaDTO> vagas = new ArrayList<VagaDTO>();
 	private int maximoDeInscricoesPorAluno;
 	
 	public long getId() {
@@ -55,8 +56,8 @@ public class EditalDeMonitoria {
 		return vagas;
 	}
 	
-	public void setVagas(ArrayList<Vaga> vagas) {
-		this.vagas = vagas;
+	public void setVagas(ArrayList<VagaDTO> arrayList) {
+		this.vagas = arrayList;
 	}
 	
 	public boolean jaAcabou() {
@@ -219,4 +220,20 @@ public class EditalDeMonitoria {
 		return edital;
 	}
 	
+	public EditalDeMonitoriaDTO toDTO() {
+        EditalDeMonitoriaDTO dto = new EditalDeMonitoriaDTO();
+        dto.setId(this.id);
+		dto.setNumero(this.numero);
+		dto.setDataInicio(this.dataInicio);
+		dto.setDataEmQueEncerrou(this.dataEmQueEncerrou);
+		dto.setDataFinal(this.dataFinal);
+		dto.setClonado(this.clonado);
+		dto.setResultadoCalculado(this.resultadoCalculado);
+		dto.setPesoNota(this.pesoNota);
+		dto.setPesoCRE(this.pesoCRE);
+		dto.setVagas(this.vagas);
+		dto.setMaximoDeInscricoesPorAluno(this.maximoDeInscricoesPorAluno);
+        
+        return dto;
+    }	
 }

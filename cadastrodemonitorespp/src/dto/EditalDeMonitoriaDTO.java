@@ -91,4 +91,6 @@ public class EditalDeMonitoriaDTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
 }
