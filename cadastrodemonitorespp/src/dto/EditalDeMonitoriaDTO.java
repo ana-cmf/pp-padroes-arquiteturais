@@ -11,6 +11,7 @@ public class EditalDeMonitoriaDTO {
 	private LocalDateTime dataInicio;
 	private LocalDateTime dataEmQueEncerrou;
 	private LocalDateTime dataFinal;
+	private String status; 
 	private boolean clonado;
 	private boolean resultadoCalculado;
 	private float pesoNota;
@@ -83,5 +84,11 @@ public class EditalDeMonitoriaDTO {
 	}
 	public void setMaximoDeInscricoesPorAluno(int maximoDeInscricoesPorAluno) {
 		this.maximoDeInscricoesPorAluno = maximoDeInscricoesPorAluno;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

@@ -199,7 +199,7 @@ public class EditalDeMonitoria {
 		System.out.println("A soma do peso do CRE tem que ser igual a 1");
 		this.pesoNota = pesoNota;
 	}
-	public float getPesoCRE() {
+	public float getPesoCRE() { 
 		return pesoCRE;
 	}
 	public void setPesoCRE(float pesoCRE) {

@@ -10,7 +10,6 @@ public class EditalDTO {
     private float pesoCRE;
     private float pesoDisciplina;
 
-    // Construtor
     public EditalDTO(LocalDateTime dataInicio, LocalDateTime dataLimite, String disciplinas, int vagas, float pesoCRE, float pesoDisciplina) {
         this.dataInicio = dataInicio;
         this.dataLimite = dataLimite;
@@ -20,7 +19,6 @@ public class EditalDTO {
         this.pesoDisciplina = pesoDisciplina;
     }
 
-    // Getters e Setters
     public LocalDateTime getDataInicio() {
         return dataInicio;
     }

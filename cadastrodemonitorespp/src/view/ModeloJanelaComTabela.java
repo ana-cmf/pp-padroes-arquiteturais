@@ -1,29 +1,25 @@
 package view;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import dto.UsuarioDTO;
+
+import dto.EditalDeMonitoriaDTO;
 
 public class ModeloJanelaComTabela extends ModeloBasicoJanela {
 
-	private UsuarioDTO usuarioDTO;
 	private JPanel painelBranco;
 	private JMenuItem menuListarEditais;
 	private JMenuItem menuAdicionarEdital;
-	private JMenuItem menuListarAlunos;
-	
+	private ArrayList<EditalDeMonitoriaDTO> listaDeEditais = new ArrayList<EditalDeMonitoriaDTO>();
 	private DefaultTableModel modeloTabela;
 	private JTable tabela;
 	
@@ -48,12 +44,50 @@ public class ModeloJanelaComTabela extends ModeloBasicoJanela {
 		
 	}
 	
-	public UsuarioDTO getUsuarioDTO() {
-		return usuarioDTO;
+	public void tabelaEditais(){
+		
+		if (!getListaDeEditais().isEmpty()) {
+			
+			modeloTabela = new DefaultTableModel();
+			modeloTabela.addColumn("Edital");
+			
+			for (EditalDeMonitoriaDTO editalDTO: getListaDeEditais()) {
+				Object[] infoEdital= new Object[] {"Edital "+editalDTO.getNumero()};
+				modeloTabela.addRow(infoEdital);
+			}
+			
+			tabela = new JTable(modeloTabela);
+			tabela.setRowSelectionAllowed(true);
+			tabela.enableInputMethods(false);
+			
+			JScrollPane painel = new JScrollPane(tabela); 
+			painel.setBounds(115, 260, 270, tamanhoDaTela().height - 350);
+			painel.setBackground(adicionarCor(181,232,149));
+			add(painel);
+			
+		} else {
+			
+			JLabel texto = new JLabel("Ainda não há editais cadastrados");
+			texto.setFont(new Font("Arial", Font.BOLD, 16));
+			texto.setBounds(15, 150, tamanhoDaTela().width/3, 50);
+			add(texto);
+			
+		}
 	}
-	public void setUsuarioDTO(UsuarioDTO usuario) {
-		this.usuarioDTO = usuario;
+	
+	public void mostrarTituloDaTabelaDeEditaisNaTela() {
+		
+		if (tabela != null) {
+			
+			JLabel tituloDaTabelaDeEditais = new JLabel("Editais cadastrados");
+			tituloDaTabelaDeEditais.setFont(new Font("Arial", Font.BOLD, 40));
+			tituloDaTabelaDeEditais.setBounds(60, 140, 500, 100);
+			add(tituloDaTabelaDeEditais);
+			
+		}
+		
 	}
+	
 	public JPanel getPainelBranco() {
 		return painelBranco;
 	}
@@ -72,12 +106,7 @@ public class ModeloJanelaComTabela extends ModeloBasicoJanela {
 	public void setMenuAdicionarEdital(JMenuItem menuAdicionarEdital) {
 		this.menuAdicionarEdital = menuAdicionarEdital;
 	}
-	public JMenuItem getMenuListarAlunos() {
-		return menuListarAlunos;
-	}
-	public void setMenuListarAlunos(JMenuItem menuListarAlunos) {
-		this.menuListarAlunos = menuListarAlunos;
-	}
+
 	public DefaultTableModel getModeloTabela() {
 		return modeloTabela;
 	}
@@ -89,6 +118,14 @@ public class ModeloJanelaComTabela extends ModeloBasicoJanela {
 	}
 	public void setTabela(JTable tabela) {
 		this.tabela = tabela;
+	}
+
+	public ArrayList<EditalDeMonitoriaDTO> getListaDeEditais() {
+		return listaDeEditais;
+	}
+
+	public void setListaDeEditais(ArrayList<EditalDeMonitoriaDTO> listaDeEditais) {
+		this.listaDeEditais = listaDeEditais;
 	}
 
 }
