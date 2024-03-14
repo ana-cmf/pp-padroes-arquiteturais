@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -17,9 +21,10 @@ public class ModeloBasicoJanela extends JFrame {
 
 	private JLabel tituloDoCabecalho;
 	private JPanel cabecalho;
+	private JMenuItem menuListarEditais;
+	private JMenuItem menuAdicionarEdital;
 	 
 	public ModeloBasicoJanela() {
-		// Chamar o método do controller para recupera a central
 		setIconImage(Imagens.ICONE_IF_TOPO_DA_JANELA);
 		setTitle("Cadastro de Monitores");
 		setSize(tamanhoDaTela().width,tamanhoDaTela().height); 
@@ -72,6 +77,40 @@ public class ModeloBasicoJanela extends JFrame {
 	
 	}
 	
+	public void adicionarMenuPrincipal() {
+		
+		JMenuBar barraDeMenu = new JMenuBar();
+		
+		this.menuListarEditais = new JMenuItem("Listar editais");
+		this.menuAdicionarEdital = new JMenuItem("Adicionar edital");
+		
+		barraDeMenu.add(menuListarEditais);
+		barraDeMenu.add(menuAdicionarEdital);
+		
+		class OuvinteMenu implements ActionListener{
+
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource() == menuAdicionarEdital) {
+					dispose();
+					new JanelaCadastrarEdital();
+				} else if(e.getSource() == menuListarEditais) {
+					dispose();
+					new JanelaVerEditais();
+				}
+				
+			}
+			
+		}
+		
+		OuvinteMenu ouvinteMenuPrincipal = new OuvinteMenu();
+		menuListarEditais.addActionListener(ouvinteMenuPrincipal);
+		menuAdicionarEdital.addActionListener(ouvinteMenuPrincipal);
+
+		barraDeMenu.setBounds(5, 75, 270, 20);
+		barraDeMenu.setVisible(true);
+		add(barraDeMenu);
+	}
+	
 	public JLabel getTituloDoCabecalho() {
 		return tituloDoCabecalho;
 	}
@@ -87,4 +126,13 @@ public class ModeloBasicoJanela extends JFrame {
 	public void setCabecalho(JPanel cabecalho) {
 		this.cabecalho = cabecalho;
 	}
+
+	public JMenuItem getMenuAdicionarEdital() {
+		return menuAdicionarEdital;
+	}
+
+	public void setMenuAdicionarEdital(JMenuItem menuAdicionarEdital) {
+		this.menuAdicionarEdital = menuAdicionarEdital;
+	}
+
 }

@@ -47,15 +47,6 @@ public class EditalDeMonitoria {
 		this.dataFinal = dataFinal;
 	}
 	
-	public String status() {
-		if(estaComInscricoesAbertas()) {
-			return "Inscrições abertas";
-		}else if (!jaComecou()){
-			return "Inscrições não iniciadas";
-		}
-		return "Inscrições encerradas";
-	}
-	
 	public boolean estaComInscricoesAbertas() {
 		return (!jaAcabou() && !encerrouAntesDoTempo() && jaComecou()); 
 	}
