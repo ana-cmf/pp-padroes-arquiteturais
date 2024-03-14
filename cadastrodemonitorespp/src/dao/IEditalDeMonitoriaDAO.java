@@ -8,9 +8,9 @@ public interface IEditalDeMonitoriaDAO {
 		
 	public void salvarEdital(EditalDeMonitoriaDTO edital);
 	
-	public void excluirEdital(EditalDeMonitoriaDTO id);
+	public void excluirEdital(EditalDeMonitoriaDTO id) throws Exception;
 	
-	public void editarEdital(EditalDeMonitoriaDTO id);
+	public void editarEdital(EditalDeMonitoriaDTO id) throws Exception;
 	
 
 }
