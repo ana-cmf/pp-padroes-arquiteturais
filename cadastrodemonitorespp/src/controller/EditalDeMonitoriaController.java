@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import dao.EditalDeMonitoriaDAO;
 import dao.IEditalDeMonitoriaDAO;
 import dto.EditalDeMonitoriaDTO;
@@ -23,10 +25,20 @@ public class EditalDeMonitoriaController {
 		
 	}
 	
+	public ArrayList<EditalDeMonitoriaDTO> buscarEditais() throws Exception{
+		
+		editalDAO = new EditalDeMonitoriaDAO();
+		return editalDAO.buscarEditais();
+	}
+	
+	public void salvarEdital(EditalDeMonitoriaDTO editalDTO) {
+		editalDAO.salvarEdital(editalDTO);
+	}
+	
 	public void clonarEdital(EditalDeMonitoriaDTO editalDTO) {
 		edital = EditalDeMonitoria.fromDTO(editalDTO);
 		edital = edital.clone();
-		//converter para dto
+		editalDTO = edital.toDTO();
 		editalDAO = new EditalDeMonitoriaDAO();
 		editalDAO.salvarEdital(editalDTO);
 		janelaVerEditais.getListaDeEditais().add(editalDTO);

@@ -1,6 +1,6 @@
 package dao;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import dto.EditalDeMonitoriaDTO;
 
@@ -12,5 +12,6 @@ public interface IEditalDeMonitoriaDAO {
 	
 	public void editarEdital(EditalDeMonitoriaDTO id) throws Exception;
 	
+	public ArrayList<EditalDeMonitoriaDTO> buscarEditais() throws Exception;
 
 }

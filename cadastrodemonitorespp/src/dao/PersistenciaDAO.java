@@ -27,13 +27,15 @@ public class PersistenciaDAO {
        pw.print(xml);
        pw.close();
    }
+   
    public CentralDeInformacoes recuperarCentral(String nomeDoArquivo) throws Exception {
-       File arquivo = new File(nomeDoArquivo);
-       if (arquivo.exists()) {
-           FileInputStream fis = new FileInputStream(arquivo);
-           return (CentralDeInformacoes) xStream.fromXML(fis);
-       }
-       return new CentralDeInformacoes();
-   }
+	   File arquivo = new File(nomeDoArquivo);
+	   if(arquivo.exists()) {
+		   FileInputStream fis = new FileInputStream(arquivo);
+		   return (CentralDeInformacoes) xStream.fromXML(fis);
+	   }
+	   return new CentralDeInformacoes();
+   }
+   
 }
 

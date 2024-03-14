@@ -24,22 +24,26 @@ import dto.EditalDeMonitoriaDTO;
 public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionListener, ListSelectionListener{
 	
 	private EditalDeMonitoriaDTO editalSelecionado;
-	private JMenuItem editarEdital;
 	private JLabel tituloDoPainelBranco;
 	private JButton clonarEdital;
 	private JButton encerrarEdital;
-	private JButton excluirEdital;
+	private JButton excluirEdital; 
 	private EditalDeMonitoriaController controller;
 	
 	public JanelaVerEditais() {
 		this.controller = new EditalDeMonitoriaController();
 		this.controller.setJanelaVerEditais(this);
+		try {
+			setListaDeEditais(controller.buscarEditais());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Erro ao carregar as informações!", "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 		criarCabecalho("Cadastro de monitores");
 		adicionarMenuPrincipal();
 		tabelaEditais();
 		mostrarTituloDaTabelaDeEditaisNaTela();
 		adicionarPainelBrancoNaTela();
-		mostrarDetalhesDoEditalNoPainelBranco();
 		setVisible(true);
 	}
 	
@@ -48,6 +52,7 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 		setListaDeEditais(listaDeEditais);
 		this.controller = new EditalDeMonitoriaController();
 		this.controller.setJanelaVerEditais(this);
+		
 		criarCabecalho("Cadastro de monitores");
 		adicionarMenuPrincipal();
 		tabelaEditais();
@@ -58,28 +63,10 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 	}
 	
 	
-	public void criarMenuDoEditalSelecionadoNoPainelBranco() {
-		
-		JMenuBar menuDoEdital = new JMenuBar();
-			
-		JMenuItem verEdital = new JMenuItem("Ver edital");
-		verEdital.setEnabled(false);
-		
-		editarEdital = new JMenuItem("Editar edital");
-		editarEdital.addActionListener(this);
-
-		menuDoEdital.add(verEdital);
-		menuDoEdital.add(editarEdital);
-		menuDoEdital.setBounds(5, 5, 150, 20);
-		getPainelBranco().add(menuDoEdital);
-			
-	}
+	
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == editarEdital) {
-			dispose();
-			//abrir tela de edição
-		}else if(e.getSource() == clonarEdital) {
+		if(e.getSource() == clonarEdital) {
 			controller.clonarEdital(editalSelecionado);
 			atualizarJanela();
 		}else if(e.getSource() == excluirEdital) {
@@ -207,14 +194,6 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 
 	public void setEditalSelecionado(EditalDeMonitoriaDTO editalSelecionado) {
 		this.editalSelecionado = editalSelecionado;
-	}
-
-	public JMenuItem getEditarEdital() {
-		return editarEdital;
-	}
-
-	public void setEditarEdital(JMenuItem editarEdital) {
-		this.editarEdital = editarEdital;
 	}
 
 	public JLabel getTituloDoPainelBranco() {

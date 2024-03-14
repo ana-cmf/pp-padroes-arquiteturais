@@ -16,7 +16,7 @@ public class EditalDeMonitoriaDTO {
 	private boolean resultadoCalculado;
 	private float pesoNota;
 	private float pesoCRE;
-	private ArrayList<Vaga> vagas = new ArrayList<Vaga>();
+	private ArrayList<VagaDTO> vagas = new ArrayList<VagaDTO>();
 	private int maximoDeInscricoesPorAluno;
 	
 	public long getId() {
@@ -73,10 +73,10 @@ public class EditalDeMonitoriaDTO {
 	public void setPesoCRE(float pesoCRE) {
 		this.pesoCRE = pesoCRE;
 	}
-	public ArrayList<Vaga> getVagas() {
+	public ArrayList<VagaDTO> getVagas() {
 		return vagas;
 	}
-	public void setVagas(ArrayList<Vaga> vagas) {
+	public void setVagas(ArrayList<VagaDTO> vagas) {
 		this.vagas = vagas;
 	}
 	public int getMaximoDeInscricoesPorAluno() {

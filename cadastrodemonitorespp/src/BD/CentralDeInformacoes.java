@@ -2,16 +2,16 @@ package BD;
 
 import java.util.ArrayList;
 
-import model.EditalDeMonitoria;
+import dto.EditalDeMonitoriaDTO;
 
 public class CentralDeInformacoes {
 	
-	private ArrayList<EditalDeMonitoria> todosOsEditais = new ArrayList<EditalDeMonitoria>();
+	private ArrayList<EditalDeMonitoriaDTO> todosOsEditais = new ArrayList<EditalDeMonitoriaDTO>();
 	
-	public ArrayList <EditalDeMonitoria> getTodosOsEditais() {
+	public ArrayList <EditalDeMonitoriaDTO> getTodosOsEditais() {
 		return todosOsEditais;
 	}
-	public void setTodosOsEditais(ArrayList <EditalDeMonitoria> todosOsEditais) {
+	public void setTodosOsEditais(ArrayList <EditalDeMonitoriaDTO> todosOsEditais) {
 		this.todosOsEditais = todosOsEditais;
 	}
 }

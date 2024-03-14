@@ -66,7 +66,7 @@ public class EditalDeMonitoria {
 		}
 		this.dataFinal = dataFinal;
 	}
-	public ArrayList<Vaga> getVagas() {
+	public ArrayList<VagaDTO> getVagas() {
 		return vagas;
 	}
 	
@@ -213,3 +213,4 @@ public class EditalDeMonitoria {
         return dto;
     }	
 
+}

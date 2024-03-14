@@ -1,9 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
-import dto.AlunoDTO;
-import dto.EditalDeMonitoriaDTO;
 import dto.VagaDTO;
 
 public class Vaga {

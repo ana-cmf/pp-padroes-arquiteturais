@@ -6,6 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,29 +18,33 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
+import controller.EditalDeMonitoriaController;
 import dto.EditalDeMonitoriaDTO;
 import dto.VagaDTO;
 
-public class JanelaCadastrarEdital extends ModeloBasicoJanela implements FocusListener, ActionListener{
+public class JanelaCadastrarEdital extends ModeloBasicoJanela implements ActionListener{
 
     
 	private JButton confirmar;
 	private JFormattedTextField campoDataInicial;
 	private JFormattedTextField campoDataFinal;
-	private JComboBox campoMaximoDeInscricoes;
+	private JComboBox<Integer> campoMaximoDeInscricoes;
 	private JComboBox<Float> campoPesoCRE;
 	private JComboBox<Float> campoPesoNota;
 	private EditalDeMonitoriaDTO editalDTO;
 	private VagaDTO vagaDTO;
-	private JButton adicionarDisciplina;
-	private Object controller;
-	
+	private EditalDeMonitoriaController controller;
+	private JTextField campoNomeDisciplina;
+	private JComboBox<Integer> campoQuantidadeDeVagas;
+	private JButton botaoOK;	
 
 
     public JanelaCadastrarEdital() {
     	criarCabecalho("Cadastro de monitores");
+    	adicionarMenuPrincipal();
     	criarFormulario();
     	setVisible(true);
     }
@@ -103,39 +111,58 @@ public class JanelaCadastrarEdital extends ModeloBasicoJanela implements FocusLi
 		campoPesoNota = new JComboBox<Float>(numerosDecimais);
 		campoPesoNota.setBounds(20, 325, 350, 20);
 		areaDoFormulario.add(campoPesoNota);
-		
-		campoDataInicial.addFocusListener(this);
-		campoDataFinal.addFocusListener(this);
-		campoMaximoDeInscricoes.addFocusListener(this);
-        campoPesoCRE.addFocusListener(this);
-        campoPesoNota.addFocusListener(this);
         
         confirmar = new JButton("Confirmar");
         confirmar.setBounds(20, 600, 100, 50);
-        confirmar.setEnabled(false);
         confirmar.addActionListener(this);
         
-        adicionarDisciplina = new JButton("Adicionar disciplina");
-        adicionarDisciplina.setBounds(20, 370, 150, 30);
-        
         areaDoFormulario.add(confirmar);
-        areaDoFormulario.add(adicionarDisciplina);
         
+        JPanel formularioDisciplina = new JPanel();
+        formularioDisciplina.setLayout(null);
+        formularioDisciplina.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        formularioDisciplina.setBounds(900, 300, 390, 300);
+        formularioDisciplina.setOpaque(true);
+        add(formularioDisciplina);
+        
+        JLabel tituloFormularioDisciplina = new JLabel("Adicionar disciplina");
+        tituloFormularioDisciplina.setBounds(20, 15, 300, 30);
+        tituloFormularioDisciplina.setFont(new Font("Arial", Font.BOLD, 20));
+        formularioDisciplina.add(tituloFormularioDisciplina);
+        
+        JLabel labelNomeDisciplina = labelPadrao("Nome da disciplina:", 12);
+        labelNomeDisciplina.setBounds(20, 90, 350, 15);
+        formularioDisciplina.add(labelNomeDisciplina);
+        
+        campoNomeDisciplina = new JTextField();
+        campoNomeDisciplina.setBounds(20, 105, 350, 20);
+        formularioDisciplina.add(campoNomeDisciplina);
+        
+        JLabel labelQuntidadeDeVagas = labelPadrao("Quantidade de vagas:", 12);
+        labelQuntidadeDeVagas.setBounds(20, 150, 350, 15);
+        formularioDisciplina.add(labelQuntidadeDeVagas);
+        
+        campoQuantidadeDeVagas = new JComboBox<Integer>(numeros);
+        campoQuantidadeDeVagas.setBounds(20, 170, 350, 20);
+        formularioDisciplina.add(campoQuantidadeDeVagas);
+        
+        botaoOK = new JButton("OK");
+        botaoOK.setBounds(20, 250, 150, 30);
+        botaoOK.addActionListener(this);
+        formularioDisciplina.add(botaoOK);
 	}
-    
-    public boolean tudoEstaPreenchido() {
-    	return !campoDataFinal.getText().isBlank() &&
+   
+    public void habilitarBotaoConfirmar() {
+    	if(!campoDataFinal.getText().isBlank() &&
     	   !campoDataInicial.getText().isBlank() &&
     	   campoPesoCRE.getSelectedItem() != null &&
     	   campoPesoNota.getSelectedItem() != null &&
-    	   campoMaximoDeInscricoes.getSelectedItem() != null;
+    	   campoMaximoDeInscricoes.getSelectedItem() != null &&
+    	   !editalDTO.getVagas().isEmpty()) {
     		
-    }
-    
-    public void habilitarBotaoConfirmar() {
-    	if(tudoEstaPreenchido()) {
     		confirmar.setEnabled(true);
     	}
+    		
     }
     
     public static void main(String[] args) {
@@ -143,23 +170,34 @@ public class JanelaCadastrarEdital extends ModeloBasicoJanela implements FocusLi
 	}
 
 	@Override
-	public void focusGained(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void focusLost(FocusEvent e) {
-		habilitarBotaoConfirmar();
-		
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == confirmar) {
-			controller.
+			
+			String data = campoDataInicial.getText();
+			DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDateTime dataFormatada = LocalDate.parse(data,parser).atStartOfDay();
+			
+			editalDTO.setDataInicio(dataFormatada);
+			
+			data = campoDataFinal.getSelectedText();
+			dataFormatada = LocalDate.parse(data,parser).atStartOfDay();
+			
+			editalDTO.setDataFinal(dataFormatada);
+			
+			editalDTO.setMaximoDeInscricoesPorAluno((int) campoMaximoDeInscricoes.getSelectedItem());
+			editalDTO.setPesoCRE((int) campoPesoCRE.getSelectedItem());
+			editalDTO.setPesoNota((int) campoPesoNota.getSelectedItem());
+
+			controller.salvarEdital(editalDTO);
+		} else if(e.getSource() == botaoOK) {
+			vagaDTO = new VagaDTO();
+			vagaDTO.setDisciplina(campoNomeDisciplina.getText());
+			vagaDTO.setQuantidadeDeVagas((int)campoQuantidadeDeVagas.getSelectedItem());
+			editalDTO.getVagas().add(vagaDTO);
+
 		}
 		
 	}
+
 
 }
