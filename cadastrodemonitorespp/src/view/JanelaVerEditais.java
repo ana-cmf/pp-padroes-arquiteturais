@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -80,10 +81,20 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 			controller.clonarEdital(editalSelecionado);
 			atualizarJanela();
 		}else if(e.getSource() == excluirEdital) {
-			controller.excluirEdital(editalSelecionado);
+			try {
+				controller.excluirEdital(editalSelecionado);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro ao carregar dados. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+				e1.printStackTrace();
+			}
 			atualizarJanela();
 		}else if(e.getSource() == encerrarEdital) {
-			controller.encerrarEditalAntesDoTempo(editalSelecionado);
+			try {
+				controller.encerrarEditalAntesDoTempo(editalSelecionado);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro ao carregar dados. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+				e1.printStackTrace();
+			}
 			atualizarJanela();
 		}
 	}

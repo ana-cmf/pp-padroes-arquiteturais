@@ -12,7 +12,7 @@ public class EditalDeMonitoriaController {
 	private IEditalDeMonitoriaDAO editalDAO; 
 	private JanelaVerEditais janelaVerEditais;
 	
-	public void encerrarEditalAntesDoTempo(EditalDeMonitoriaDTO editalDTO) {
+	public void encerrarEditalAntesDoTempo(EditalDeMonitoriaDTO editalDTO) throws Exception {
 		edital = EditalDeMonitoria.fromDTO(editalDTO);
 		edital.encerrarEditalAntesDoTempo();
 		editalDTO.setDataEmQueEncerrou(edital.getDataEmQueEncerrou());
@@ -32,7 +32,7 @@ public class EditalDeMonitoriaController {
 		janelaVerEditais.getListaDeEditais().add(editalDTO);
 	}
 	
-	public void excluirEdital(EditalDeMonitoriaDTO editalDTO) {
+	public void excluirEdital(EditalDeMonitoriaDTO editalDTO) throws Exception {
 		editalDAO = new EditalDeMonitoriaDAO();
 		editalDAO.excluirEdital(editalDTO);
 		janelaVerEditais.getListaDeEditais().remove(editalDTO);
