@@ -1,36 +1,34 @@
 package dto;
 
-public class AlunoDTO {
-	
-	public class AlunoDTO extends UsuarioDTO {
-		
-		private String matricula;
-		private float CRE;
-		private int nota;
-		private float mediaPonderada;
-		
-		public String getMatricula() {
-			return matricula;
-		}
+public class AlunoDTO extends UsuarioDTO {
 
-		public void setMatricula(String matricula) {
-			this.matricula = matricula;
-		}
+	private String matricula;
+	private float CRE;
+	private int nota;
+	private float mediaPonderada;
 
-		public float getCRE() {
-			return CRE;
-		}
+	public String getMatricula() {
+		return matricula;
+	}
 
-		public void setCRE(float cRE) {
-			CRE = cRE;
-		}
-		
-		public int getNota() {
-			return nota;
-		}
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
 
-		public void setNota(int nota) {
-			this.nota = nota;
-		}
+	public float getCRE() {
+		return CRE;
+	}
+
+	public void setCRE(float cRE) {
+		CRE = cRE;
+	}
+
+	public int getNota() {
+		return nota;
+	}
+
+	public void setNota(int nota) {
+		this.nota = nota;
 	}
 }
+

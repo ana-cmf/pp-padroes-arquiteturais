@@ -14,45 +14,18 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-
-import controller.TransicaoDeJanelasCoordenadorController;
 import dto.UsuarioDTO;
 
-public class ModeloJanelaComTabela extends ModeloBasicoJanela implements ActionListener{
+public class ModeloJanelaComTabela extends ModeloBasicoJanela {
 
 	private UsuarioDTO usuarioDTO;
-	private TransicaoDeJanelasCoordenadorController coordenadorController;
-	
 	private JPanel painelBranco;
-	
 	private JMenuItem menuListarEditais;
 	private JMenuItem menuAdicionarEdital;
 	private JMenuItem menuListarAlunos;
 	
 	private DefaultTableModel modeloTabela;
 	private JTable tabela;
-	
-	public void logarUsuario() {
-		JPanel informacoesUsuario = new JPanel(false);
-		informacoesUsuario.setOpaque(false);
-		informacoesUsuario.setLayout(new BoxLayout(informacoesUsuario, BoxLayout.Y_AXIS));
-		
-		JLabel nomeUsuario = labelPadrao(getUsuarioDTO().getNome()+" "+getUsuarioDTO().getSobrenome(), 12);
-		nomeUsuario.setAlignmentX(SwingConstants.RIGHT);
-		
-		JLabel emailUsuario = labelPadrao(getUsuarioDTO().getEmail(), 12);
-		emailUsuario.setAlignmentX(SwingConstants.RIGHT);
-		
-		informacoesUsuario.add(nomeUsuario);
-		informacoesUsuario.add(emailUsuario);
-		
-		
-		informacoesUsuario.add(Box.createVerticalGlue());
-		informacoesUsuario.setBounds(getWidth() - 300, 10, 280, 50);
-		informacoesUsuario.setVisible(true);
-		getCabecalho().add(informacoesUsuario);
-
-	}
 	
 	public void adicionarPainelBrancoNaTela() {
 		
@@ -72,51 +45,6 @@ public class ModeloJanelaComTabela extends ModeloBasicoJanela implements ActionL
 		painelBrancoVazio.setLayout(null);
 		painelBrancoVazio.setVisible(true);
 		return painelBrancoVazio;
-		
-	}
-	
-	public void adicionarMenuPrincipalCoordenador() {
-		
-		JMenuBar barraDeMenu = new JMenuBar();
-		
-		this.menuListarEditais = new JMenuItem("Listar editais");
-		this.menuAdicionarEdital = new JMenuItem("Adicionar edital");
-		this.menuListarAlunos = new JMenuItem("Listar alunos");
-		
-		barraDeMenu.add(menuListarEditais);
-		barraDeMenu.add(menuAdicionarEdital);
-		barraDeMenu.add(menuListarAlunos);
-		
-		
-		menuListarEditais.addActionListener(this);
-		menuAdicionarEdital.addActionListener(this);
-		menuListarAlunos.addActionListener(this);
-
-
-		barraDeMenu.setBounds(5, 75, 270, 20);
-		barraDeMenu.setVisible(true);
-		add(barraDeMenu);
-	}
-	
-	public void actionPerformed(ActionEvent e) {
-		
-		if(e.getSource() == menuListarEditais) {
-			
-			coordenadorController.abrirTelaDeListarEditais();
-			
-		}
-		
-		if(e.getSource() == menuAdicionarEdital) {
-			
-			coordenadorController.abrirTelaDeListarEditais();;
-			
-		}
-		
-		if(e.getSource() == menuListarAlunos) {
-			
-			coordenadorController.abrirTelaDeListarAlunos();;
-
-		}
 		
 	}
 	
