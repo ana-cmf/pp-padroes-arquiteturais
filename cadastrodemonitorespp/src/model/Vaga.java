@@ -5,16 +5,6 @@ import java.util.ArrayList;
 public class Vaga {
 	private String disciplina;
 	private int quantidadeDeVagas;
-	private ArrayList<Aluno> listaDeAlunosInscritos = new ArrayList<Aluno>();
-	private ArrayList<Aluno> listaDeAlunosAprovados = new ArrayList<Aluno>();
-
-	public void gerarRankingDaVaga() {
-		listaDeAlunosInscritos.sort(null);
-		
-		for(int num=0; num<quantidadeDeVagas; num++) {
-			listaDeAlunosAprovados.add(listaDeAlunosInscritos.get(num));
-		}
-	}
 
 	public String getDisciplina() {
 		return disciplina;
