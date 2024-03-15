@@ -102,47 +102,7 @@ public class EditalDeMonitoria {
 			dataEmQueEncerrou = null;
 		}
 	}
-	
-<<<<<<< HEAD
-	public String toString() {
-		
-		String numero = "Número: " + this.numero;
-		
-		DateTimeFormatter formatoDaData = DateTimeFormatter.ofPattern("d/M/y");
-		
-		String dataInicial = "Data de início: " + this.dataInicio.toLocalDate().format(formatoDaData);
-		
-		String dataFinal = "Data final: ";
-		
-		if(encerrouAntesDoTempo()) {
-			dataFinal = dataFinal + this.dataEmQueEncerrou.toLocalDate().format(formatoDaData);
-		} else {
-			dataFinal = dataFinal + this.dataFinal.toLocalDate().format(formatoDaData);
-		}
-		
-		String pesoNota = "Peso da nota na disciplina: " + this.pesoNota;
-		String pesoCRE = "Peso do CRE: " + this.pesoCRE;
-		String maximoDeInscricoesPorAluno = "Máximo de inscrições por aluno: " + this.maximoDeInscricoesPorAluno;
 
-		
-		String infoVagas = "";
-		for (VagaDTO vaga: vagas) {
-			infoVagas += vaga.getDisciplina()+" - "+vaga.getQuantidadeDeVagas()+" vagas\n";
-		}
-		
-		
-		String infoEdital = numero + "\n" +
-							dataInicial + "\n" +
-							dataFinal + "\n" +
-							pesoNota + "\n" +
-							pesoCRE + "\n" +
-							maximoDeInscricoesPorAluno + "\n" +
-							infoVagas;
-		return infoEdital;
-	}
-	
-=======
->>>>>>> 14c167facf628628e234ffe9fc43ed89a43acdbd
 	public EditalDeMonitoria clone() {
 		EditalDeMonitoria editalClonado = new EditalDeMonitoria(numero, dataInicio, dataFinal);
 		editalClonado.setVagas(vagas);
@@ -152,23 +112,7 @@ public class EditalDeMonitoria {
 		return editalClonado;
 	}
 	
-	public void editar(EditalDeMonitoriaDTO editalDTO) {
-		
-		if(!jaComecou()) {
-			dataInicio = editalDTO.getDataInicio();
-		}
-		
-		if(editalDTO.getDataFinal().isBefore(dataFinal)) {
-			dataFinal = editalDTO.getDataFinal();
-		}
-		
-		if(editalDTO.getMaximoDeInscricoesPorAluno() > maximoDeInscricoesPorAluno) {
-			maximoDeInscricoesPorAluno = editalDTO.getMaximoDeInscricoesPorAluno();
-		}
-		
-		// editar pesos
-		
-	}
+	
 	
 	public boolean encerrouAntesDoTempo() {
 		if (dataEmQueEncerrou == null) {
@@ -200,16 +144,12 @@ public class EditalDeMonitoria {
 		return pesoNota;
 	}
 	public void setPesoNota(float pesoNota) {
-		System.out.println("A soma do peso do CRE tem que ser igual a 1");
 		this.pesoNota = pesoNota;
 	}
 	public float getPesoCRE() { 
 		return pesoCRE;
 	}
 	public void setPesoCRE(float pesoCRE) {
-		if (pesoCRE != 1) {
-			System.out.println("A soma do peso do CRE tem que ser igual a 1");
-		}
 		this.pesoCRE = pesoCRE;
 	}
 	public int getMaximoDeInscricoesPorAluno() {
@@ -233,12 +173,9 @@ public class EditalDeMonitoria {
 		edital.setVagas(dto.getVagas());
 		edital.setMaximoDeInscricoesPorAluno(dto.getMaximoDeInscricoesPorAluno());
 		
-<<<<<<< HEAD
-		return edital;}
-=======
+
 		return edital;
 	}
->>>>>>> 14c167facf628628e234ffe9fc43ed89a43acdbd
 	
 	public EditalDeMonitoriaDTO toDTO() {
         EditalDeMonitoriaDTO dto = new EditalDeMonitoriaDTO();
@@ -257,12 +194,4 @@ public class EditalDeMonitoria {
         return dto;
 		
     }	
-<<<<<<< HEAD
 }
-=======
-
-<<<<<<< HEAD
-}
-=======
->>>>>>> 14c167facf628628e234ffe9fc43ed89a43acdbd
->>>>>>> 6be7e16abdffe353b1ad8787b1d66ce6101f5484

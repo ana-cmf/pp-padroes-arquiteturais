@@ -52,7 +52,8 @@ public class ModeloJanelaComTabela extends ModeloBasicoJanela {
 			modeloTabela.addColumn("Edital");
 			
 			for (EditalDeMonitoriaDTO editalDTO: getListaDeEditais()) {
-				Object[] infoEdital= new Object[] {"Edital "+editalDTO.getNumero()};
+				int num = getListaDeEditais().indexOf(editalDTO) + 1;
+				Object[] infoEdital= new Object[] {"Edital "+ num};
 				modeloTabela.addRow(infoEdital);
 			}
 			

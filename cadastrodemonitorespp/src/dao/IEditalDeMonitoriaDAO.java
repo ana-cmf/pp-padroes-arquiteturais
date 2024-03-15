@@ -6,7 +6,7 @@ import dto.EditalDeMonitoriaDTO;
 
 public interface IEditalDeMonitoriaDAO {
 		
-	public void salvarEdital(EditalDeMonitoriaDTO edital);
+	public void salvarEdital(EditalDeMonitoriaDTO edital) throws Exception;
 	
 	public void excluirEdital(EditalDeMonitoriaDTO id) throws Exception;
 	

@@ -43,6 +43,8 @@ public class JanelaCadastrarEdital extends ModeloBasicoJanela implements ActionL
 
 
     public JanelaCadastrarEdital() {
+		this.controller = new EditalDeMonitoriaController();
+		this.editalDTO = new EditalDeMonitoriaDTO();
     	criarCabecalho("Cadastro de monitores");
     	adicionarMenuPrincipal();
     	criarFormulario();
@@ -64,9 +66,13 @@ public class JanelaCadastrarEdital extends ModeloBasicoJanela implements ActionL
 		areaDoFormulario.add(titulo);
 		
 		try {
-			MaskFormatter mascara = new MaskFormatter("##/##/####");
+			MaskFormatter mascara = new MaskFormatter("##-##-####");
 			campoDataInicial = new JFormattedTextField(mascara);
+            campoDataInicial.setColumns(10);
+
 			campoDataFinal = new JFormattedTextField(mascara);
+			campoDataFinal.setColumns(10);
+
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Formato de data inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
@@ -172,23 +178,27 @@ public class JanelaCadastrarEdital extends ModeloBasicoJanela implements ActionL
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == confirmar) {
-			
 			String data = campoDataInicial.getText();
-			DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			LocalDateTime dataFormatada = LocalDate.parse(data,parser).atStartOfDay();
 			
 			editalDTO.setDataInicio(dataFormatada);
 			
-			data = campoDataFinal.getSelectedText();
+			data = campoDataFinal.getText();
 			dataFormatada = LocalDate.parse(data,parser).atStartOfDay();
 			
 			editalDTO.setDataFinal(dataFormatada);
 			
 			editalDTO.setMaximoDeInscricoesPorAluno((int) campoMaximoDeInscricoes.getSelectedItem());
-			editalDTO.setPesoCRE((int) campoPesoCRE.getSelectedItem());
-			editalDTO.setPesoNota((int) campoPesoNota.getSelectedItem());
+			editalDTO.setPesoCRE(((Number)campoPesoCRE.getSelectedItem()).floatValue());
+			editalDTO.setPesoNota(((Number)campoPesoNota.getSelectedItem()).floatValue());
 
-			controller.salvarEdital(editalDTO);
+			try {
+				controller.salvarEdital(editalDTO);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(this, "Erro ao carregar as informações!", "Erro", JOptionPane.ERROR_MESSAGE);
+				e1.printStackTrace();
+			}
 		} else if(e.getSource() == botaoOK) {
 			vagaDTO = new VagaDTO();
 			vagaDTO.setDisciplina(campoNomeDisciplina.getText());

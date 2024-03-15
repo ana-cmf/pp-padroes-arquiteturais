@@ -15,8 +15,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import imagens.Imagens;
-
 public class ModeloBasicoJanela extends JFrame {
 
 	private JLabel tituloDoCabecalho;

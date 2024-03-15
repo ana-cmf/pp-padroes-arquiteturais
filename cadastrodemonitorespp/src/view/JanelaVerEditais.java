@@ -20,15 +20,16 @@ import javax.swing.event.ListSelectionListener;
 
 import controller.EditalDeMonitoriaController;
 import dto.EditalDeMonitoriaDTO;
+import dto.VagaDTO;
 
-public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionListener, ListSelectionListener{
+public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionListener{
 	
 	private EditalDeMonitoriaDTO editalSelecionado;
-	private JLabel tituloDoPainelBranco;
 	private JButton clonarEdital;
 	private JButton encerrarEdital;
 	private JButton excluirEdital; 
 	private EditalDeMonitoriaController controller;
+	private JPanel painel;
 	
 	public JanelaVerEditais() {
 		this.controller = new EditalDeMonitoriaController();
@@ -42,8 +43,16 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 		criarCabecalho("Cadastro de monitores");
 		adicionarMenuPrincipal();
 		tabelaEditais();
+		adicionarOuvinteNaTabela();	
+		
+		if(!getListaDeEditais().isEmpty()) {
+			this.editalSelecionado = getListaDeEditais().get(0);
+			mostrarDetalhesDoEditalNoPainelBranco();
+		}
+		
 		mostrarTituloDaTabelaDeEditaisNaTela();
-		adicionarPainelBrancoNaTela();
+		criarBotoesDoEditalNoPainelBranco();
+		mostrarTituloDoPainelBranco();
 		setVisible(true);
 	}
 	
@@ -52,13 +61,18 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 		setListaDeEditais(listaDeEditais);
 		this.controller = new EditalDeMonitoriaController();
 		this.controller.setJanelaVerEditais(this);
-		
+		try {
+			setListaDeEditais(controller.buscarEditais());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Erro ao carregar as informações!", "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
 		criarCabecalho("Cadastro de monitores");
 		adicionarMenuPrincipal();
 		tabelaEditais();
-		mostrarTituloDaTabelaDeEditaisNaTela();
-		adicionarPainelBrancoNaTela();
 		mostrarDetalhesDoEditalNoPainelBranco();
+		criarBotoesDoEditalNoPainelBranco();
+		mostrarTituloDoPainelBranco();
 		setVisible(true);
 	}
 	
@@ -67,13 +81,17 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == clonarEdital) {
-			controller.clonarEdital(editalSelecionado);
+			try {
+				controller.clonarEdital(editalSelecionado);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(this, "Erro ao carregar as informações!", "Erro", JOptionPane.ERROR_MESSAGE);
+				e1.printStackTrace();
+			}
 			atualizarJanela();
 		}else if(e.getSource() == excluirEdital) {
 			try {
 				controller.excluirEdital(editalSelecionado);
 			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, "Erro ao carregar dados. Tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
 				e1.printStackTrace();
 			}
 			atualizarJanela();
@@ -89,11 +107,11 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 	}
 	
 	public void mostrarTituloDoPainelBranco() {
-		
+		JLabel tituloDoPainelBranco; 
 		if(getListaDeEditais().isEmpty()) {
-			tituloDoPainelBranco.setText("Não há editais para mostrar");			
+			tituloDoPainelBranco = new JLabel("Não há editais para mostrar");			
 		}else {
-			tituloDoPainelBranco.setText("Detalhes do edital");
+			tituloDoPainelBranco = new JLabel("Detalhes do edital");
 			
 			if(editalSelecionado == null) {
 				editalSelecionado = getListaDeEditais().get(0);
@@ -102,8 +120,8 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 			mostrarDetalhesDoEditalNoPainelBranco();
 		}
 		tituloDoPainelBranco.setFont(new Font("Arial", Font.BOLD, 14));
-		tituloDoPainelBranco.setBounds(getPainelBranco().getWidth()/3, 30, getPainelBranco().getWidth()/3, 40);
-		getPainelBranco().add(tituloDoPainelBranco);
+		tituloDoPainelBranco.setBounds(getWidth(), 30, painel.getWidth()/3, 40);
+		painel.add(tituloDoPainelBranco);
 		repaint();
 	}
 	
@@ -111,33 +129,38 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 		
 		DateTimeFormatter formatoDaData = DateTimeFormatter.ofPattern("d/M/y");
 		
-		String numero = "Número: " + editalSelecionado.getNumero();
 		String dataInicial = "Data de início: " + editalSelecionado.getDataInicio().toLocalDate().format(formatoDaData);
 		String dataFinal = "Data final: ";
 		String pesoNota = "Peso da nota na disciplina: " + editalSelecionado.getPesoNota();
 		String pesoCRE = "Peso do CRE: " + editalSelecionado.getPesoCRE();
 		String maximoDeInscricoesPorAluno = "Máximo de inscrições por aluno: " + editalSelecionado.getMaximoDeInscricoesPorAluno();
+		String infoVagas = "";
+		for (VagaDTO vaga: editalSelecionado.getVagas()) {
+			infoVagas += vaga.getDisciplina()+" - "+vaga.getQuantidadeDeVagas()+" vagas\n";
+		}
 		
-		if(editalSelecionado.getDataEmQueEncerrou() == null) {
+		if(editalSelecionado.getDataEmQueEncerrou() != null) {
 			dataFinal = dataFinal + editalSelecionado.getDataEmQueEncerrou().toLocalDate().format(formatoDaData);
 		} else {
 			dataFinal = dataFinal + editalSelecionado.getDataFinal().toLocalDate().format(formatoDaData);
 		}
 		
 		JTextArea informacoesDoEdital = new JTextArea(
-				numero + "\n" +
 				dataInicial + "\n"+
 				dataFinal + "\n" +
 				pesoNota + "\n" +
 				pesoCRE + "\n" +
-				maximoDeInscricoesPorAluno + "\n"
+				maximoDeInscricoesPorAluno + "\n" +
+				infoVagas
 				);
 		informacoesDoEdital.setBounds(5, 70, 1000, 380);
 		informacoesDoEdital.setEditable(false);
-		informacoesDoEdital.setCaretColor(getPainelBranco().getBackground());
+		informacoesDoEdital.setCaretColor(informacoesDoEdital.getBackground());
 		informacoesDoEdital.setDisabledTextColor(Color.black);
-		informacoesDoEdital.setBackground(getPainelBranco().getBackground());
-		getPainelBranco().add(informacoesDoEdital);
+		informacoesDoEdital.setOpaque(false);
+		painel = criarPainelBrancoVazio();
+		painel.add(informacoesDoEdital);
+		add(painel);
 		repaint();
 	}
 	
@@ -163,17 +186,31 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 		areaDosBotoes.add(encerrarEdital);
 		areaDosBotoes.add(excluirEdital);
 		
-		areaDosBotoes.setBounds(5, getPainelBranco().getHeight() - 80, getPainelBranco().getWidth() - 10, 80);
+		areaDosBotoes.setBounds(5, painel.getHeight() - 80, painel.getWidth() - 10, 80);
 		areaDosBotoes.setVisible(true);
 		
-		getPainelBranco().add(areaDosBotoes);
+		painel.add(areaDosBotoes);
 	}
 	
 	public void adicionarOuvinteNaTabela() {
 		
-		if(getTabela()!= null) {
-			getTabela().getSelectionModel().addListSelectionListener(this);
+		if (getTabela()!= null) {
+			
+			class OuvinteTabela implements ListSelectionListener{
+				
+				public void valueChanged(ListSelectionEvent e) {
+					int index = getTabela().getSelectedRow();
+					EditalDeMonitoriaDTO edital = getListaDeEditais().get(index);
+					setEditalSelecionado(edital);
+					atualizarJanela();
+					}
+					
+			}
+				
+			getTabela().getSelectionModel().addListSelectionListener(new OuvinteTabela());
 		}
+		
+		
 	}
 	
 	public void valueChanged(ListSelectionEvent e) {
@@ -196,13 +233,6 @@ public class JanelaVerEditais extends ModeloJanelaComTabela implements ActionLis
 		this.editalSelecionado = editalSelecionado;
 	}
 
-	public JLabel getTituloDoPainelBranco() {
-		return tituloDoPainelBranco;
-	}
-
-	public void setTituloDoPainelBranco(JLabel tituloDoPainelBranco) {
-		this.tituloDoPainelBranco = tituloDoPainelBranco;
-	}
 
 	public JButton getExcluirEdital() {
 		return excluirEdital;

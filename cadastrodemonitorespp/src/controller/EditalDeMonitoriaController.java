@@ -31,11 +31,12 @@ public class EditalDeMonitoriaController {
 		return editalDAO.buscarEditais();
 	}
 	
-	public void salvarEdital(EditalDeMonitoriaDTO editalDTO) {
+	public void salvarEdital(EditalDeMonitoriaDTO editalDTO) throws Exception {
+		editalDAO = new EditalDeMonitoriaDAO();
 		editalDAO.salvarEdital(editalDTO);
 	}
 	
-	public void clonarEdital(EditalDeMonitoriaDTO editalDTO) {
+	public void clonarEdital(EditalDeMonitoriaDTO editalDTO) throws Exception {
 		edital = EditalDeMonitoria.fromDTO(editalDTO);
 		edital = edital.clone();
 		editalDTO = edital.toDTO();

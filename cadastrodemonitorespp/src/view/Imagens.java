@@ -1,4 +1,4 @@
-package imagens;
+package view;
 
 import java.awt.Image;
 import java.awt.Toolkit;

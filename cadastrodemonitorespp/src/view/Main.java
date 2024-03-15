@@ -1,6 +1,6 @@
-package main;
+package view;
 
-import view.JanelaVerEditais;
+import dao.PersistenciaDAO;
 
 public class Main {
 	public static void main(String[] args) {
